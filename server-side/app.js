@@ -20,6 +20,7 @@ var server = http.createServer(app);
 var io = require("socket.io")(server);
 
 var chatsRouter = require("./routes/chat");
+var usersRouter = require("./routes/users");
 
 /**
  * Get port from environment and store in Express.
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/api/chats", chatsRouter);
+app.use("/api/users", usersRouter);
 
 io.on("connection", function (socket) {
     console.log('socket connected')
