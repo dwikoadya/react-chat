@@ -43,6 +43,7 @@ export default class ChatFrom extends Component {
             onChange={this.handleChange}
             value={this.state.nama}
           />
+          {/* <h5>{props.user.username}</h5> */}
           <Message
             name="chat"
             placeholder="Write Your CHat Here..."
