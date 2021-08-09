@@ -45,7 +45,6 @@ export default class RegisterForm extends Component {
       this.setState({ password: "" });
       this.setState({ retype: "" });
 
-      this.props.history.push("/chat");
     }
   }
 
