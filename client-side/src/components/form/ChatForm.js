@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../../css/style.css";
 import User from "../input/User";
 import Message from "../input/Message";
+import ButtonSend from "../button/ButtonSend";
 
 export default class ChatFrom extends Component {
   constructor(props) {
@@ -48,13 +49,7 @@ export default class ChatFrom extends Component {
             change={this.handleChange}
             value={this.state.chat}
           />
-          <div className="speech-bubble">
-            <div className="input-group">
-              <button className="msg_send_btn" type="submit">
-                <i className="fa fa-paper-plane" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
+          <ButtonSend />
         </li>
       </form>
     );
