@@ -4,7 +4,7 @@ import Email from "../input/Email";
 import Text from "../input/Text";
 import Password from "../input/Password";
 import ButtonSubmit from "../button/ButtonSubmit";
-import Reminder from "../screens/Reminder";
+import ReminderLogin from '../screens/ReminderLogin'
 import Layout from "../screens/Layout";
 
 export default class RegisterForm extends Component {
@@ -127,7 +127,7 @@ export default class RegisterForm extends Component {
               error={this.state.errors.retype}
             />
             <ButtonSubmit />
-            <Reminder path="/login" />
+            <ReminderLogin path="/login" />
           </form>
         </Card>
       </Layout>
