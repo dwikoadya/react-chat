@@ -4,7 +4,7 @@ import User from "../input/User";
 import Message from "../input/Message";
 import ButtonSend from "../button/ButtonSend";
 
-export default class ChatFrom extends Component {
+export default class ChatForm extends Component {
   constructor(props) {
     super(props);
     this.state = { nama: "", chat: "" };
@@ -43,10 +43,9 @@ export default class ChatFrom extends Component {
             onChange={this.handleChange}
             value={this.state.nama}
           />
-          {/* <h5>{props.user.username}</h5> */}
           <Message
             name="chat"
-            placeholder="Write Your CHat Here..."
+            placeholder="Write Your Chat Here..."
             change={this.handleChange}
             value={this.state.chat}
           />
