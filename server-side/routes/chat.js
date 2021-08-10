@@ -1,52 +1,62 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var chat = require('../models/chat')
+var chat = require("../models/chat");
+const helpers = require('../helpers/util')
 
 /* GET users listing. */
-router.get('/', (req, res) => {
-  chat.find({}, (err, chats)=>{
-    if(err) return res.status(500).json({err})
-    res.status(200).json(chats)
-  })
+router.get("/", helpers.verifyToken, (req, res) => {
+  chat.find({}, (err, chats) => {
+    if (err) return res.status(500).json({ err });
+    res.status(200).json(chats);
+  });
 });
 
-  router.post('/', (req, res) => {
-    chat.create({id: req.body.id, nama: req.body.nama, chat: req.body.chat })
-      .then(chatItem => {
-        res.status(200).json({
-          chatAdded: chatItem
-        })
-      }).catch(err => {
-        res.status(500).send({
-          message: err.message || "Something wrong while adding Data."
-        })
+router.post("/", helpers.verifyToken, (req, res) => {
+  chat
+    .create({ id: req.body.id, nama: req.body.nama, chat: req.body.chat })
+    .then((chatItem) => {
+      res.status(200).json({
+        chatAdded: chatItem,
       });
-  })
-
-  router.put('/:id', (req, res) => {
-    chat.findOneAndUpdate({id: parseInt(req.params.id)}, { nama: req.body.nama, chat: req.body.chat })
-      .then(chatItem => {
-        res.status(200).json({
-          chatEdited: chatItem
-        })
-      }).catch(err => {
-        res.status(500).send({
-          message: err.message || "Something wrong while edit Data."
-        })
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Something wrong while adding Data.",
       });
-  })
+    });
+});
 
-  router.delete('/:id', (req, res) => {
-    chat.findOneAndRemove({id: parseInt(req.params.id)})
-      .then(chatItem => {
-        res.status(200).json({
-          chatDeleted: chatItem
-        });
-      }).catch(err => {
-        res.status(500).send({
-          message: err.message || "Something wrong while deleting Data."
-        })
+router.put("/:id", (req, res) => {
+  chat
+    .findOneAndUpdate(
+      { id: parseInt(req.params.id) },
+      { nama: req.body.nama, chat: req.body.chat }
+    )
+    .then((chatItem) => {
+      res.status(200).json({
+        chatEdited: chatItem,
       });
-  });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Something wrong while edit Data.",
+      });
+    });
+});
 
-  module.exports = router;
+router.delete("/:id", helpers.verifyToken, (req, res) => {
+  chat
+    .findOneAndRemove({ id: parseInt(req.params.id) })
+    .then((chatItem) => {
+      res.status(200).json({
+        chatDeleted: chatItem,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Something wrong while deleting Data.",
+      });
+    });
+});
+
+module.exports = router;
