@@ -3,7 +3,7 @@ import Card from "../screens/Card";
 import Email from "../input/Email";
 import Password from "../input/Password";
 import ButtonSubmit from "../button/ButtonSubmit";
-import Reminder from "../screens/Reminder";
+import ReminderRegister from "../screens/ReminderRegister";
 import Layout from "../screens/Layout";
 
 export default class LoginForm extends Component {
@@ -13,11 +13,11 @@ export default class LoginForm extends Component {
       email: "",
       password: "",
       showPassword: false,
+      errors: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.setPassword = this.setPassword.bind(this);
   }
 
   handleChange(event) {
@@ -28,16 +28,35 @@ export default class LoginForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.loginUser({
-      email: this.state.email,
-      password: this.state.password,
-    });
-    this.setState({ email: "" });
-    this.setState({ password: "" });
+    if (this.validate()) {
+      this.props.loginUser({
+        email: this.state.email,
+        password: this.state.password,
+      });
+      this.setState({ email: "" });
+      this.setState({ password: "" });
+    }
   }
 
-  setPassword() {
-    this.setState({ showPassword: !this.state.showPassword });
+  validate() {
+    let errors = {};
+    let isValid = true;
+
+    if (!this.state.email) {
+      isValid = false;
+      errors.email = "Please enter your email";
+    }
+
+    if (!this.state.password) {
+      isValid = false;
+      errors.password = "Please enter your password";
+    }
+
+    this.setState({
+      errors: errors,
+    });
+
+    return isValid;
   }
 
   render() {
@@ -51,6 +70,7 @@ export default class LoginForm extends Component {
               label="Email"
               onChange={this.handleChange}
               value={this.state.email}
+              error={this.state.errors.email}
             />
             <Password
               name="password"
@@ -58,9 +78,10 @@ export default class LoginForm extends Component {
               label="Password"
               onChange={this.handleChange}
               value={this.state.password}
+              error={this.state.errors.password}
             />
             <ButtonSubmit />
-            <Reminder path="/register" />
+            <ReminderRegister path="/register" />
           </form>
         </Card>
       </Layout>
