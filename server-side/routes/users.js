@@ -3,10 +3,9 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const User = require ('../models/user')
-const secret = "sinlay";
 
 
-router.get('/register', (req, res) => {
+router.get('/', (req, res) => {
   User.find({}, (err, users) => {
     if (err) res.status(500).json({err})
     res.status(200).json(users)
